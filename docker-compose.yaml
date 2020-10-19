@@ -17,7 +17,7 @@ services:
       dockerfile: ./web/Dockerfile
     command: npm start --prefix /usr/src/app/web/sol
     volumes:
-      - ./web:/usr/src/app/
+      - web:/usr/src/app/
     ports:
       - 3000:3000
     stdin_open: true
@@ -27,3 +27,4 @@ services:
 
 volumes:
   api_images:
+  web:
