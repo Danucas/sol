@@ -1,0 +1,29 @@
+version: '3.1'
+
+
+services:
+  snap_api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    command: python3 -m api.v1.app
+    volumes:
+        - api_images:/usr/src/api/v1/rendered
+    ports:
+      - 3001:3001
+  snap_web:
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+    command: npm start --prefix /usr/src/app/web/sol
+    # volumes:
+    #   - ./web_client:/usr/src/app/
+    ports:
+      - 3000:3000
+    stdin_open: true
+    depends_on:
+      - api
+
+
+volumes:
+  api_images:

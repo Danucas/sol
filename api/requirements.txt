@@ -1,0 +1,12 @@
+opencv-python
+eventlet
+Pillow
+flask_cors
+flask-socketio
+Flask==1.1.1
+scikit-build
+moviepy
+ffmpeg-python
+mhmovie
+pydub
+scipy
