@@ -14,7 +14,7 @@ RUN npm --version
 RUN npm config ls
 # RUN npm install @tensorflow/tfjs @tensorflow-models/body-pix react-webcam react react-scripts
 # RUN npm install --prefix /usr/src/app/web/sol
-RUN npm update
+# RUN npm update
 
 WORKDIR /usr/src/app
 # run the entrypoint
