@@ -1,2 +1,3 @@
 #!/bin/sh
-exec "$@"
+echo 'npm container ready'
+# exec "$@"
