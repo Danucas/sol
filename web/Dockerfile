@@ -6,6 +6,8 @@ WORKDIR /usr/src/app
 
 RUN npm install --prefix /usr/src/app/web/sol @tensorflow/tfjs @tensorflow-models/body-pix react-webcam react react-scripts
 
+
+
 # Copy the resources to container
 COPY web /usr/src/app/web
 COPY web/entrypoint.sh /usr/src/app/entrypoint.sh
