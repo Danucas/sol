@@ -8,9 +8,8 @@ WORKDIR /usr/src/app
 RUN npm install --prefix /usr/src/app/web/sol
 
 
-
 # Copy the resources to container
-COPY web /usr/src/app/web
+COPY web/ /usr/src/app/web/
 COPY web/entrypoint.sh /usr/src/app/entrypoint.sh
 
 # run the entrypoint
