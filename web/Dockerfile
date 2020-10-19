@@ -10,7 +10,8 @@ COPY web /usr/src/app/web
 COPY web/entrypoint.sh /usr/src/app/entrypoint.sh
 
 # RUN npm install --prefix /usr/src/app/web/sol @tensorflow/tfjs @tensorflow-models/body-pix react-webcam react
-RUN npm install --prefix /usr/src/app/web/sol
+# RUN npm install --prefix /usr/src/app/web/sol
+RUN npm upgrade --prefix /usr/src/app/web/sol
 
 # run the entrypoint
 ENTRYPOINT [ "/usr/src/app/entrypoint.sh" ]
