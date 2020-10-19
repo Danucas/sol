@@ -11,7 +11,7 @@ COPY web/entrypoint.sh /usr/src/app/entrypoint.sh
 
 WORKDIR /usr/src/app/web/sol
 RUN npm --version
-RUN npm install @tensorflow/tfjs @tensorflow-models/body-pix react-webcam react
+RUN npm install @tensorflow/tfjs @tensorflow-models/body-pix react-webcam react react-scripts
 # RUN npm install --prefix /usr/src/app/web/sol
 # RUN npm update --prefix /usr/src/app/web/sol
 
