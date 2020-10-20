@@ -3,7 +3,9 @@
 from flask import jsonify, request, Response, send_file, stream_with_context
 from api.v1.media import app_video
 from api.v1.media.rgb import list_to_image
-from api.v1.auth import token_required, DB, Clip, User
+from api.v1.auth import token_required
+from api.v1.db.clip import Clip
+from api.v1.db import DB
 from scipy.io.wavfile import write
 import numpy as np
 from uuid import uuid4
@@ -47,10 +49,11 @@ def save_video(data, dimensions, process_id):
 
     if not os.path.isdir(folder):
         os.mkdir(folder)
-        filename = f'{folder}/0.png'
+        pos = 0
+        filename = f'{folder}/{pos:06}.png'
     else:
         pos = len(os.listdir(folder))
-        filename = f'{folder}/{pos}.png'
+        filename = f'{folder}/{pos:06}.png'
     im = Image.open(BytesIO(base64.b64decode(data)))
     im.save(f'{filename}', 'PNG')
     return True
@@ -99,7 +102,8 @@ def join_video_tracks():
         save_audio(data['data'], data['id'])
     elif data['type'] == 'video':
         # print(data)
-        save_video(data['data'], data['dimensions'], data['id'])
+        for frame in data['data']:
+            save_video(frame, data['dimensions'], data['id'])
     elif data['type'] == 'render':
         render_video(data['id'], data['time'])
     elif data['type'] == 'merge':
@@ -107,7 +111,7 @@ def join_video_tracks():
         duration = ffmpeg.probe(f'./api/v1/rendered/{_id}/rendered.mp4')['format']['duration']
         clip = Clip()
         clip.id = _id
-        clip.src = f'http://127.0.0.1:3001/video/clips/{_id}'
+        clip.src = f'http://localhost:3001/video/clips/{_id}'
         clip.user_id = request.user
         clip.duration = duration
         clip.save()
@@ -155,10 +159,22 @@ def after_request(response):
                 strict_slashes=False)
 def get_video_clip(clip_id):
     render_folder = f'{current_path}/api/v1/rendered/{clip_id}/rendered.mp4'
-    return send_file(
-        render_folder, attachment_filename='video.mp4',
-        mimetype='video/mp4'
-    )
+    try:
+        return send_file(
+            render_folder, attachment_filename='video.mp4',
+            mimetype='video/mp4'
+        )
+    except FileNotFoundError as e:
+        delete_clip(clip_id)
+
+def delete_clip(clip_id):
+    """
+    Remove a clip from db and look at rendered videos
+    """
+    db = DB()
+    clip = db.filter_by('clips', 'id', clip_id)
+    if clip:
+        db.remove(clip[0])
 
 def render_video(process_id, time):
     """
@@ -212,6 +228,6 @@ def render_video(process_id, time):
         print(e)
     # ffmpeg.concat(input_video, input_audio, v=1, a=1).output()
     shutil.rmtree(f'{folder}', ignore_errors=True)
-    shutil.rmtree(f'{img_folder}', ignore_errors=True)
+    # shutil.rmtree(f'{img_folder}', ignore_errors=True)
     
     
