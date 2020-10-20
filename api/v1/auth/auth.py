@@ -45,8 +45,9 @@ def register():
     db = DB()
     data = request.get_json()
     email = data['email']
-    existing_user = db.filter_by('users', 'email', email)[0]
+    existing_user = db.filter_by('users', 'email', email)
     if existing_user:
+        existing_user = existing_user[0]
         return jsonify(message="Can't create this user"), 309
     password = data['password']
     user = User()
@@ -64,10 +65,10 @@ def login():
     email = data['email']
     passwd = data['password']
     db = DB()
-    user = db.filter_by('users', 'email', email)[0]
+    user = db.filter_by('users', 'email', email)
     print('user login', user, email, passwd)
-    if user and passwd == user.password:
-        token = generate_token(user.email)
+    if user and passwd == user[0].password:
+        token = generate_token(user[0].email)
         return jsonify(token=token)
     else:
         return jsonify(error='Unauthorized'), 401
@@ -169,4 +170,4 @@ class DB:
         if len(objs) > 0:
             return objs
         else:
-            return [None]
+            return None
