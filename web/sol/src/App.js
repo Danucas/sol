@@ -991,7 +991,7 @@ export class MainView extends React.Component {
 		console.log(videos);
 		if (videos) {
 			rendered = videos.map((clip)=>{
-				const url = clip.src;
+				const url = `${global.domain}_api/video/clips/${clip.id}`;
 				const sec = Math.round(Number(clip.duration));
 				return (
 					<li className={ menuStyles.gallery_clip } key={ uuidv4() }>

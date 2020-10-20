@@ -13,7 +13,7 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: 80%;
-	background-image: url(/icons/back_arrow.png);
+	background-image: url(/snap/icons/back_arrow.png);
 	filter: invert();
 }
 .back:active {
@@ -54,11 +54,11 @@
 }
 .save {
 	background-color: rgb(17, 174, 127) !important;
-	background-image: url(/icons/svg/save.svg);
+	background-image: url(/snap/icons/svg/save.svg);
 	background-size: 60%;
 }
 .back_remove {
-	background-image: url(/icons/svg/remove_background.svg);
+	background-image: url(/snap/icons/svg/remove_background.svg);
 	background-size: 60%;
 }
 .active {
@@ -89,22 +89,22 @@
 	background-position: center;
 }
 .deleteBtn {
-	background-image: url(/icons/svg/delete.svg);
+	background-image: url(/snap/icons/svg/delete.svg);
 }
 .galleryBtn {
-	background-image: url(/icons/svg/gallery.svg);
+	background-image: url(/snap/icons/svg/gallery.svg);
 	filter: opacity(0.1);
 }
 .recordBtn {
 	border-radius: 50%;
 	background-repeat: no-repeat;
 	background-size: 60% !important;
-	background-image: url(/icons/svg/record.svg);
+	background-image: url(/snap/icons/svg/record.svg);
 }
 .recordingBtn {
 	background-repeat: no-repeat;
 	background-size: 60% !important;
-	background-image: url(/icons/svg/stop.svg);
+	background-image: url(/snap/icons/svg/stop.svg);
 }
 .recordBtn:active {
 	background-size: 56% !important;
@@ -217,7 +217,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 100%;
-	background-image: url(/icons/gif/Infinity.gif);
+	background-image: url(/snap/icons/gif/Infinity.gif);
 }
 .loading h2 {
 	width: 50%;
@@ -313,10 +313,10 @@
 	background-color: transparent !important;
 }
 .preview_play {
-	background-image: url(/icons/svg/play.svg);
+	background-image: url(/snap/icons/svg/play.svg);
 }
 .preview_pause {
-	background-image: url(/icons/svg/pause.svg) !important;
+	background-image: url(/snap/icons/svg/pause.svg) !important;
 }
 .preview_ford {
 	background-color: transparent !important;
@@ -329,14 +329,14 @@
 	right: 6vw;
 	width: 14vw;
 	height: 14vw;
-	background-image: url(/icons/muted.png);
+	background-image: url(/snap/icons/muted.png);
 	background-size: 60% !important;
 	border-radius: 50%;
 	filter: invert();
 	border: 3px solid black !important;
 }
 .preview_unmuted {
-	background-image: url(/icons/sound.png) !important;
+	background-image: url(/snap/icons/sound.png) !important;
 }
 .preview_time {
 	font-size: 5vw;
@@ -389,19 +389,19 @@
 	left: 0px;
 	top: 0px;
 	margin-left: 2vw !important;
-	background-image: url(/icons/back_arrow.png);
+	background-image: url(/snap/icons/back_arrow.png);
 	
 }
 .preview_nav_save {
 	box-shadow: none !important;
-	background-image: url(/icons/svg/save.svg);
+	background-image: url(/snap/icons/svg/save.svg);
 	backdrop-filter: blur(5px);
 	background-size: 70%;
 	margin-left: calc(100% - 16vw) !important;
 }
 .preview_nav_delete {
 	background-color: rgb(208, 22, 22);
-	background-image: url(/icons/svg/trash.svg);
+	background-image: url(/snap/icons/svg/trash.svg);
 	background-size: 60%;
 }
 .preview_navigation button {
@@ -547,7 +547,7 @@
 }
 .recorded_editor_player_controls :nth-child(2n) {
 	border-radius: 50%;
-	background-image: url(/icons/svg/play.svg);
+	background-image: url(/snap/icons/svg/play.svg);
 }
 .recorded_editor_player_controls :nth-child(3n) {
 	background-color: transparent;
@@ -576,7 +576,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background-color: rgb(17, 174, 127) !important;
-	background-image: url(/icons/svg/save.svg);
+	background-image: url(/snap/icons/svg/save.svg);
 	background-size: 60%;
 }
 .close_recorded {
@@ -585,7 +585,7 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background-color: rgb(0, 255, 157) !important;
-	background-image: url(/icons/svg/back_clip.svg);
+	background-image: url(/snap/icons/svg/back_clip.svg);
 	background-size: 60%;
 	border: none;
 	position: absolute;
@@ -614,7 +614,7 @@
 }
 .clips_back {
 	outline: none;
-	background-image: url(/icons/svg/back_clip.svg);
+	background-image: url(/snap/icons/svg/back_clip.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 8vw;
@@ -631,7 +631,7 @@
 }
 .clips_next {
 	outline: none;
-	background-image: url(/icons/svg/back_clip.svg);
+	background-image: url(/snap/icons/svg/back_clip.svg);
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 8vw;
