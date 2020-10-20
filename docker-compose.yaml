@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: ./web/Dockerfile
-    command: npm start --prefix /usr/src/app/web/sol
+    command: PUBLIC_URL=https://dnart.tech/snap npm start --prefix /usr/src/app/web/sol
     volumes:
       - web:/usr/src/app/
     ports:
