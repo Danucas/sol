@@ -746,8 +746,18 @@ function VideoFrame () {
 		// Uploading Video fragments
 		let videoStartindex = Math.round(clip.start * (clip.recordedframes.length / clip.duration));
 		let videoEndindex = Math.round(clip.end * (clip.recordedframes.length / clip.duration));
+		const canvas = document.createElement('canvas');
+		canvas.width = clip.dimensions[0];
+		canvas.height = clip.dimensions[1];
+		const ctx = canvas.getContext();
 		for (let vIndex = videoStartindex; vIndex < videoEndindex; vIndex++) {
-			let chunk;
+			const data = ctx.createImageData(clip.dimensions[0], clip.dimensions[1]);
+			for (let px = 0; px < clip.recordedframes[vIndex].length; px++) {
+				data.data[px] = clip.recordedframes[vIndex][px];
+			}
+			ctx.putImageData(data, 0, 0);
+			let chunk = ctx.canvas.toDataURL();
+
 			chunk = Array.from(clip.recordedframes[vIndex]);
 			const req = await fetch(`${global.domain}_api/video/join`,
 				{

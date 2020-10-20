@@ -19,6 +19,9 @@ import os
 import sys
 import shutil
 import json
+import base64
+from PIL import Image
+from io import BytesIO
 
 def save_video(data, dimensions, process_id):
     """
@@ -27,10 +30,14 @@ def save_video(data, dimensions, process_id):
     folder = f'/usr/src/app/api/v1/tmpVideo/{process_id}'
     if not os.path.isdir(folder):
         os.mkdir(folder)
-        list_to_image(data, '0.png', f'{folder}/', dimensions)
+        im = Image.open(BytesIO(base64.b64decode(data)))
+        im.save(f'{folder}/0.png', 'PNG')
+        # list_to_image(data, '0.png', f'{folder}/', dimensions)
     else:
         pos = len(os.listdir(folder))
-        list_to_image(data, f'{pos:06}.png', f'{folder}/', dimensions)
+        im = Image.open(BytesIO(base64.b64decode(data)))
+        im.save(f'{folder}/{pos}.png', 'PNG')
+        # list_to_image(data, f'{pos:06}.png', f'{folder}/', dimensions)
     return True
 
 def save_audio(data, process_id):
