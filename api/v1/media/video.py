@@ -24,7 +24,7 @@ def save_video(data, dimensions, process_id):
     """
     Stores the image chunks
     """
-    folder = f'./api/v1/tmpVideo/{process_id}'
+    folder = f'/usr/src/app/api/v1/tmpVideo/{process_id}'
     if not os.path.isdir(folder):
         os.mkdir(folder)
         list_to_image(data, '0.png', f'{folder}/', dimensions)
@@ -37,7 +37,7 @@ def save_audio(data, process_id):
     """
     Stores the audio chunks
     """
-    folder = f'./api/v1/tmpAudio/{process_id}'
+    folder = f'/usr/src/app/api/v1/tmpAudio/{process_id}'
     if not os.path.isdir(folder):
         os.mkdir(folder)
         with open(f'{folder}/0.json', 'w') as aufile:
@@ -55,16 +55,16 @@ def merge_clips(clips):
     videoid = str(uuid4())
     inputs = []
     for clip in clips:
-        path = f'./api/v1/tmpRender/{clip}/rendered.mp4'
+        path = f'/usr/src/app/api/v1/tmpRender/{clip}/rendered.mp4'
         inp = ffmpeg.input(path)
         inputs.append(inp['v'])
         inputs.append(inp['a'])
-    os.mkdir(f'./api/v1/rendered/{videoid}')
+    os.mkdir(f'/usr/src/app/api/v1/rendered/{videoid}')
     (ffmpeg.concat(*inputs, v=1, a=1)
-        .output(f'./api/v1/rendered/{videoid}/rendered.mp4')
+        .output(f'/usr/src/app/api/v1/rendered/{videoid}/rendered.mp4')
         .run(overwrite_output=True))
     for clip in clips:
-        shutil.rmtree(f'./api/v1/tmpRender/{clip}', ignore_errors=True)
+        shutil.rmtree(f'/usr/src/app/api/v1/tmpRender/{clip}', ignore_errors=True)
     return videoid
 
 
@@ -105,7 +105,7 @@ def get_video_clips():
             _id = clip.id
             try:
                 sys.stderr = open('err_file', 'w')
-                duration = ffmpeg.probe(f'./api/v1/rendered/{_id}/rendered.mp4')['format']['duration']
+                duration = ffmpeg.probe(f'/usr/src/app/api/v1/rendered/{_id}/rendered.mp4')['format']['duration']
                 print(duration)
                 clip.duration = duration
                 clip.save()
@@ -131,7 +131,7 @@ def after_request(response):
                 methods=['GET'],
                 strict_slashes=False)
 def get_video_clip(clip_id):
-    render_folder = f'/rendered/{clip_id}/rendered.mp4'
+    render_folder = f'/usr/src/app/api/v1/rendered/{clip_id}/rendered.mp4'
     return send_file(
         render_folder, attachment_filename='video.mp4',
         mimetype='video/mp4'
@@ -141,7 +141,7 @@ def render_video(process_id, time):
     """
     render the video based on the tmpAudio and tmpVideo content
     """
-    folder = f'./api/v1/tmpAudio/{process_id}'
+    folder = f'/usr/src/app/api/v1/tmpAudio/{process_id}'
     audio_list = sorted(os.listdir(folder))
     audio_data = []
     for audio_file in audio_list:
@@ -151,7 +151,7 @@ def render_video(process_id, time):
                 audio_data.append(byte)
     audio_np_array = np.array(audio_data)
     fs = 44100
-    render_folder = f'./api/v1/tmpRender/{process_id}'
+    render_folder = f'/usr/src/app/api/v1/tmpRender/{process_id}'
     os.mkdir(render_folder)
     print('saving audio at ', fs, 'per second')
     duration = len(audio_np_array) / fs
@@ -159,7 +159,7 @@ def render_video(process_id, time):
     matrix = np.array([audio_np_array]).T
     write(f'{render_folder}/audio_file.wav', fs, matrix)
     # compose the image with the photos
-    img_folder = f'./api/v1/tmpVideo/{process_id}'
+    img_folder = f'/usr/src/app/api/v1/tmpVideo/{process_id}'
     images_list = sorted(os.listdir(img_folder))
     frames = len(images_list)
     fps = frames / duration
