@@ -30,7 +30,7 @@ def save_video(data, dimensions, process_id):
     folder = f'/usr/src/app/api/v1/tmpVideo/{process_id}'
     if not os.path.isdir(folder):
         os.mkdir(folder)
-        data = f"{data.split(',')[1]}{'=' * ((4 - len(data) % 4) % 4)}"
+        data = f"{data.split(',')[1]}{'=' * ((4 - len(data.split(',')[1]) % 4) % 4)}"
         im = Image.open(BytesIO(base64.b64decode(data)))
         im.save(f'{folder}/0.png', 'PNG')
         # list_to_image(data, '0.png', f'{folder}/', dimensions)
