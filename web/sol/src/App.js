@@ -14,6 +14,10 @@ import { time } from '@tensorflow/tfjs';
 
 const framerate = 44100;
 
+const global = {
+	domain: 'https://dnart.tech/snap'
+};
+
 class RecorderEditor extends React.Component {
 	constructor (props) {
 		super(props);
@@ -319,7 +323,6 @@ class PreviewPlayer extends React.Component {
 			previewer.video.removeEventListener('timeupdate', this.placeTimePreviewPointer);
 		}
 	}
-	
 	componentDidMount () {
 		const videoPreview = document.getElementsByClassName(videoStyles.record_preview)[0];
 		const video = videoPreview.querySelector('video');
@@ -724,7 +727,7 @@ function VideoFrame () {
 			} else {
 				chunk = clip.recordedChuncks.slice(aIndex, aIndex + (chunkl));
 			}
-			const req = await fetch(`http://localhost:3001/video/join`,
+			const req = await fetch(`${global.domain}_api/video/join`,
 				{
 					method: 'POST',
 					headers: {
@@ -746,7 +749,7 @@ function VideoFrame () {
 		for (let vIndex = videoStartindex; vIndex < videoEndindex; vIndex++) {
 			let chunk;
 			chunk = Array.from(clip.recordedframes[vIndex]);
-			const req = await fetch(`http://localhost:3001/video/join`,
+			const req = await fetch(`${global.domain}_api/video/join`,
 				{
 					method: 'POST',
 					headers: {
@@ -764,7 +767,7 @@ function VideoFrame () {
 			// console.log(await req.json());
 		}
 		// Render the clip
-		const req = await fetch(`http://localhost:3001/video/join`,
+		const req = await fetch(`${global.domain}_api/video/join`,
 			{
 				method: 'POST',
 				headers: {
@@ -795,7 +798,7 @@ function VideoFrame () {
 		}
 		// Then merge all
 		const processId = uuidv4();
-		const req = await fetch(`http://localhost:3001/video/join`,
+		const req = await fetch(`${global.domain}_api/video/join`,
 			{
 				method: 'POST',
 				headers: {
@@ -817,7 +820,7 @@ function VideoFrame () {
 	const save = async function () {
 		const renderedVideoId = await renderVideo();
 		loadingRef.current.style.visibility = 'hidden';
-		openPreview(`http://localhost:3001/video/clips/${renderedVideoId}`);
+		openPreview(`${global.domain}_api/video/clips/${renderedVideoId}`);
 	}
 	const openPreview = function (url) {
 		const videoPreview = document.getElementById('preview');
@@ -1016,7 +1019,7 @@ export class MainView extends React.Component {
 	}
 	componentDidMount () {
 		const gallery = this;
-		fetch(`http://localhost:3001/video/clips/urls`,
+		fetch(`${global.domain}_api/video/clips/urls`,
 		{
 			method: 'GET',
 			headers: {

@@ -3,6 +3,10 @@ import ReactDOM, { unmountComponentAtNode } from 'react-dom';
 import loginStyles from './Login.module.css';
 import { MainView } from './App.js';
 
+
+const global = {
+	domain: 'https://dnart.tech/snap'
+};
 const cont = document.getElementById('root');
 
 export class Login extends React.Component {
@@ -61,7 +65,7 @@ export class Login extends React.Component {
 	}
 	login() {
 		// console.log(this.state);
-		fetch(`http://localhost:3001/auth/login`,
+		fetch(`${global.domain}_api/auth/login`,
 			{
 				method: 'POST',
 				headers: {
@@ -145,7 +149,7 @@ export class Register extends React.Component {
 	}
 	register() {
 		// console.log(this.state);
-		fetch(`http://localhost:3001/auth/register`,
+		fetch(`${global.domain}_api/auth/register`,
 			{
 				method: 'POST',
 				headers: {
