@@ -169,4 +169,4 @@ class DB:
         if len(objs) > 0:
             return objs
         else:
-            return None
+            return [None]
