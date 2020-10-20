@@ -751,14 +751,22 @@ function VideoFrame () {
 		canvas.width = clip.dimensions[0];
 		canvas.height = clip.dimensions[1];
 		const ctx = canvas.getContext('2d');
-		for (let vIndex = videoStartindex; vIndex < videoEndindex; vIndex++) {
-			const data = ctx.createImageData(clip.dimensions[0], clip.dimensions[1]);
-			for (let px = 0; px < clip.recordedframes[vIndex].length; px++) {
-				data.data[px] = clip.recordedframes[vIndex][px];
+		for (let vIndex = videoStartindex; vIndex < videoEndindex; vIndex += 10) {
+			const chunks = [];
+			try {
+				for (let chunkInd = 0; chunkInd < 10; chunkInd++) {
+					const data = ctx.createImageData(clip.dimensions[0], clip.dimensions[1]);
+					for (let px = 0; px < clip.recordedframes[vIndex + chunkInd].length; px++) {
+						data.data[px] = clip.recordedframes[vIndex + chunkInd][px];
+					}
+					ctx.putImageData(data, 0, 0);
+					let chunk = ctx.canvas.toDataURL();
+					chunks.push(chunk);
+				}
+			} catch (err) {
+				console.log('out of index', err);
 			}
-			ctx.putImageData(data, 0, 0);
-			let chunk = ctx.canvas.toDataURL();
-			console.log(chunk);
+			console.log(chunks.length);
 			// chunk = Array.from(clip.recordedframes[vIndex]);
 			const req = await fetch(`${global.apiDomain}/video/join`,
 				{
@@ -771,7 +779,7 @@ function VideoFrame () {
 						id: processId,
 						type: 'video',
 						dimensions: clip.dimensions,
-						data: chunk
+						data: chunks
 					})
 				}
 			);
