@@ -30,6 +30,7 @@ def save_video(data, dimensions, process_id):
     folder = f'/usr/src/app/api/v1/tmpVideo/{process_id}'
     if not os.path.isdir(folder):
         os.mkdir(folder)
+        data = f"{data}{'=' * ((4 - len(data) % 4) % 4)}"
         im = Image.open(BytesIO(base64.b64decode(data)))
         im.save(f'{folder}/0.png', 'PNG')
         # list_to_image(data, '0.png', f'{folder}/', dimensions)
@@ -83,6 +84,7 @@ def join_video_tracks():
     if data['type'] == 'audio':
         save_audio(data['data'], data['id'])
     elif data['type'] == 'video':
+        print(data)
         save_video(data['data'], data['dimensions'], data['id'])
     elif data['type'] == 'render':
         render_video(data['id'], data['time'])
