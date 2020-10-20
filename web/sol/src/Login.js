@@ -5,7 +5,8 @@ import { MainView } from './App.js';
 
 
 const global = {
-	domain: 'https://dnart.tech/snap'
+	apiDomain: 'https://dnart.tech/snap_api',
+	// apiDomain: 'http://localhost:3001',
 };
 const cont = document.getElementById('root');
 
@@ -65,7 +66,7 @@ export class Login extends React.Component {
 	}
 	login() {
 		// console.log(this.state);
-		fetch(`${global.domain}_api/auth/login`,
+		fetch(`${global.apiDomain}/auth/login`,
 			{
 				method: 'POST',
 				headers: {
@@ -149,7 +150,7 @@ export class Register extends React.Component {
 	}
 	register() {
 		// console.log(this.state);
-		fetch(`${global.domain}_api/auth/register`,
+		fetch(`${global.apiDomain}/auth/register`,
 			{
 				method: 'POST',
 				headers: {

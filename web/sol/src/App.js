@@ -15,7 +15,8 @@ import { time } from '@tensorflow/tfjs';
 const framerate = 44100;
 
 const global = {
-	domain: 'https://dnart.tech/snap'
+	apiDomain: 'https://dnart.tech/snap_api',
+	// apiDomain: 'http://localhost:3001',
 };
 
 class RecorderEditor extends React.Component {
@@ -727,7 +728,7 @@ function VideoFrame () {
 			} else {
 				chunk = clip.recordedChuncks.slice(aIndex, aIndex + (chunkl));
 			}
-			const req = await fetch(`${global.domain}_api/video/join`,
+			const req = await fetch(`${global.apiDomain}/video/join`,
 				{
 					method: 'POST',
 					headers: {
@@ -757,9 +758,9 @@ function VideoFrame () {
 			}
 			ctx.putImageData(data, 0, 0);
 			let chunk = ctx.canvas.toDataURL();
-
+			console.log(chunk);
 			// chunk = Array.from(clip.recordedframes[vIndex]);
-			const req = await fetch(`${global.domain}_api/video/join`,
+			const req = await fetch(`${global.apiDomain}/video/join`,
 				{
 					method: 'POST',
 					headers: {
@@ -774,10 +775,13 @@ function VideoFrame () {
 					})
 				}
 			);
+			if (req.status !== 200) {
+				return null;
+			}
 			// console.log(await req.json());
 		}
 		// Render the clip
-		const req = await fetch(`${global.domain}_api/video/join`,
+		const req = await fetch(`${global.apiDomain}/video/join`,
 			{
 				method: 'POST',
 				headers: {
@@ -804,11 +808,15 @@ function VideoFrame () {
 		// render each clip
 		for (let i = 0; i < clips.length; i++) {
 			const clipId = await uploadClip(clips[i]);
-			renderedClips.push(clipId);
+			if (clipId) {
+				renderedClips.push(clipId);
+			} else {
+				return null;
+			}
 		}
 		// Then merge all
 		const processId = uuidv4();
-		const req = await fetch(`${global.domain}_api/video/join`,
+		const req = await fetch(`${global.apiDomain}/video/join`,
 			{
 				method: 'POST',
 				headers: {
@@ -830,7 +838,12 @@ function VideoFrame () {
 	const save = async function () {
 		const renderedVideoId = await renderVideo();
 		loadingRef.current.style.visibility = 'hidden';
-		openPreview(`${global.domain}_api/video/clips/${renderedVideoId}`);
+		if (renderedVideoId) {
+			openPreview(`${global.apiDomain}/video/clips/${renderedVideoId}`);
+		} else {
+			console.log('Error at rendering video');
+		}
+		
 	}
 	const openPreview = function (url) {
 		const videoPreview = document.getElementById('preview');
@@ -1001,7 +1014,7 @@ export class MainView extends React.Component {
 		console.log(videos);
 		if (videos) {
 			rendered = videos.map((clip)=>{
-				const url = `${global.domain}_api/video/clips/${clip.id}`;
+				const url = `${global.apiDomain}/video/clips/${clip.id}`;
 				const sec = Math.round(Number(clip.duration));
 				return (
 					<li className={ menuStyles.gallery_clip } key={ uuidv4() }>
@@ -1029,7 +1042,7 @@ export class MainView extends React.Component {
 	}
 	componentDidMount () {
 		const gallery = this;
-		fetch(`${global.domain}_api/video/clips/urls`,
+		fetch(`${global.apiDomain}/video/clips/urls`,
 		{
 			method: 'GET',
 			headers: {
