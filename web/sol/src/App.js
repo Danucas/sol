@@ -758,7 +758,7 @@ function VideoFrame () {
 			ctx.putImageData(data, 0, 0);
 			let chunk = ctx.canvas.toDataURL();
 
-			chunk = Array.from(clip.recordedframes[vIndex]);
+			// chunk = Array.from(clip.recordedframes[vIndex]);
 			const req = await fetch(`${global.domain}_api/video/join`,
 				{
 					method: 'POST',
