@@ -1,6 +1,6 @@
 {
   "name": "sol",
-  "homepage": "https://dnart.tech/snap",
+  "homepage": "/snap/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
