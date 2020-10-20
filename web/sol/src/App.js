@@ -749,7 +749,7 @@ function VideoFrame () {
 		const canvas = document.createElement('canvas');
 		canvas.width = clip.dimensions[0];
 		canvas.height = clip.dimensions[1];
-		const ctx = canvas.getContext();
+		const ctx = canvas.getContext('2d');
 		for (let vIndex = videoStartindex; vIndex < videoEndindex; vIndex++) {
 			const data = ctx.createImageData(clip.dimensions[0], clip.dimensions[1]);
 			for (let px = 0; px < clip.recordedframes[vIndex].length; px++) {
