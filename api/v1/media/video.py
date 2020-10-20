@@ -31,7 +31,7 @@ def save_video(data, dimensions, process_id):
     if not os.path.isdir(folder):
         os.mkdir(folder)
         data = data.split(',')[1]
-        data = f"{data}{'=' * (4 - (len(data) % 4))}"
+        data = "{}{}".format(data.split(',')[1], '=' * (4 - (len(data.split(',')[1]) % 4)))
         im = Image.open(BytesIO(base64.b64decode(data)))
         im.save(f'{folder}/0.png', 'PNG')
         # list_to_image(data, '0.png', f'{folder}/', dimensions)
