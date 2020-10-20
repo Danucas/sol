@@ -131,7 +131,7 @@ def after_request(response):
                 methods=['GET'],
                 strict_slashes=False)
 def get_video_clip(clip_id):
-    render_folder = f'./rendered/{clip_id}/rendered.mp4'
+    render_folder = f'/rendered/{clip_id}/rendered.mp4'
     return send_file(
         render_folder, attachment_filename='video.mp4',
         mimetype='video/mp4'
