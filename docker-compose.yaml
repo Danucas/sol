@@ -28,3 +28,7 @@ services:
 volumes:
   api_images:
   web:
+
+networks:
+  snap-net:
+    driver: bridge
