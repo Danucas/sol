@@ -46,8 +46,11 @@ def token_required(f):
             if not email:
                 return jsonify(error='Failed Unauthorized'), 401
             db = DB()
-            user = db.filter_by('users', 'email', email)[0]
-            request.user = user.id
+            user = db.filter_by('users', 'email', email)
+            if user:
+                request.user = user[0].id
+            else:
+                return jsonify(error='Failed Unauthorized'), 401
             return f(*args, **kwargs)
     return decorated
 
